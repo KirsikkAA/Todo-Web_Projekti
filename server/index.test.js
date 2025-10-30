@@ -14,7 +14,7 @@ describe("Testing basic database functionality", () => {
     const response = await fetch ("http://localhost:3001/create", {
         method: "post",
         headers:{"Content-Type": "application/json"},
-        body:JSON.stringify({task:newTask}) //tai Test task
+        body:JSON.stringify({task:newTask})
     })
     const data = await response.json()
     expect(response.status).to.equal(201)
