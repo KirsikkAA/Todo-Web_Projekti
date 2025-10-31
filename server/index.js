@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import todoRouter from './routers/todoRouter.js'
+import todoRouter from './routes/todoRouter.js'
 
 
 const port = process.env.PORT
