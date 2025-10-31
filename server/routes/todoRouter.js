@@ -12,19 +12,18 @@ router.get('/', (req,res)=>{
     })
 })
 
-router.post('/create', (req,res)=>{
+router.post('/create', auth,(req,res)=>{
     const {task} = req.body
     
     if(!task){
         return res.status(400).json({error:'Task is required'})
     }
-
     pool.query('Insert into task (description) values ($1) returning *', [task.description],
     (err,result)=>{
         if(err){
             return next(err)
         }
-        res.status(201).json(result.rows[0])
+        res.status(201).json({id:result.rows[0].id, description: task.description})
     })
 })
 
