@@ -20,7 +20,6 @@ const initializeTestDb = () => {
     })
 }
 
-//copilot sanoo, että pitäisi olla bcrypt.hash(user.password...)
 const InsertTestUser = (user) => {
     hash(user.password, 10, (err, hashedPassword) => {
         if(err){

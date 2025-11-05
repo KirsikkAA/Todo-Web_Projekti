@@ -6,7 +6,6 @@ describe("Testing basic database functionality", () => {
     const testUser = {email: "foo@foo.com", password: "password123"}
         before(() => {
         initializeTestDb()
-        //copilot sanoo     token = `Bearer ${getToken(testUser.email)}`
         token = getToken(testUser)
     })
 

@@ -9,10 +9,10 @@ export default function Row({item, deleteTask}){
     )
 }
 
-<ul>
+/*<ul>
     {
         task.map(item =>(
             <Row item = {item} key ={item.id} deleteTask={deleteTask}/>
         ))
     }
-</ul>
+</ul>*/
