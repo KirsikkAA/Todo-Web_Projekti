@@ -1,9 +1,10 @@
+import {auth} from '../helper/auth.js'
 import {pool} from '../helper/db.js'
 import {Router} from 'express'
 
 const router = Router()
 
-router.get('/', (req,res)=>{
+router.get('/', (req,res,next)=>{
     pool.query('SELECT * FROM task', (err,result) => {
         if(err){
             return next (err)
@@ -12,7 +13,7 @@ router.get('/', (req,res)=>{
     })
 })
 
-router.post('/create', auth,(req,res)=>{
+router.post('/create', auth,(req,res,next)=>{
     const {task} = req.body
     
     if(!task){
@@ -27,7 +28,7 @@ router.post('/create', auth,(req,res)=>{
     })
 })
 
-router.delete('/delete/:id', (req,res)=>{
+router.delete('/delete/:id', (req,res,next)=>{
     const {id} = req.params
     console.log(`Deleting task with id: ${id}`)
     pool.query('delete from task WHERE id = $1',
@@ -40,7 +41,7 @@ router.delete('/delete/:id', (req,res)=>{
                 error.status = 404
                 return next(error)
             }
-            return res.status(200).json({id})
+            return res.status(200).json({id:id})
         })
 })
 

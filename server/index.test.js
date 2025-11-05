@@ -6,6 +6,7 @@ describe("Testing basic database functionality", () => {
     const testUser = {email: "foo@foo.com", password: "password123"}
         before(() => {
         initializeTestDb()
+        //copilot sanoo     token = `Bearer ${getToken(testUser.email)}`
         token = getToken(testUser)
     })
 
@@ -33,7 +34,7 @@ describe("Testing basic database functionality", () => {
     expect(data).to.include.all.keys(["id", "description"])
     expect(data.description).to.equal(newTask.description)
     })
-    
+
     it("should delete task", async() => {
         const response = await fetch("http://localhost:3001/delete/1",{
             method:"delete"
@@ -43,12 +44,15 @@ describe("Testing basic database functionality", () => {
         expect(data).to.include.all.keys("id")
     })
 
-    it("should not create a new task without descripion", async () => {
+    it("should not create a new task without description", async () => {
         const response = await fetch("http://localhost:3001/create", {
-            method: "post",
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify({task:null})
-        })
+        method: "post",
+        headers:{
+            "Content-Type": "application/json",
+            Authorization: token
+        },
+        body:JSON.stringify({task:null})
+    })
         const data = await response.json()
         expect(response.status).to.equal(400)
         expect(data).to.include.all.keys("error")
@@ -57,9 +61,9 @@ describe("Testing basic database functionality", () => {
 
 
 describe("Testing user management", () => {
-    const user = {email: "foo2@test.com", password: "password123"}
+    const user = {email:"foo2@test.com", password: "password123"}
     before(() => {
-        insertTestUser(user)
+        InsertTestUser(user)
     })
 
     it("should sign up", async () => {
@@ -69,20 +73,20 @@ describe("Testing user management", () => {
             method: "post",
             headers:{"Content-Type":"application/json"},
             body: JSON.stringify({user:newUser})
-        });
+        })
         const data = await response.json()
         expect(response.status).to.equal(201)
         expect(data).to.include.all.keys(["id", "email"])
         expect(data.email).to.equal(newUser.email)
     })
-        it("should log in", async () => {
+        it('should log in', async () => {
         const response = await fetch ("http://localhost:3001/user/signin", {
             method: "post",
             headers:{"Content-Type":"application/json"},
             body: JSON.stringify({user})
         })
         const data = await response.json()
-        expect(response.status).to.equal(201)
+        expect(response.status).to.equal(200)
         expect(data).to.include.all.keys(["id", "email", "token"])
         expect(data.email).to.equal(user.email)
     })
