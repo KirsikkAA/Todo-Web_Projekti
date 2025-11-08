@@ -1,7 +1,8 @@
 import {Link, useNavigate} from "react-router-dom"
 import { useUser } from "../context/useUser"
 
-export const AuthenticationMode = Object.freeze({
+// KATSO O
+export const AuthenticationMode = object.freeze({
     SignIn: 'Login',
     SignUp: 'SignUp'
 })
