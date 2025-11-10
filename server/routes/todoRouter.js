@@ -1,11 +1,14 @@
 import {auth} from '../helper/auth.js'
 import {pool} from '../helper/db.js'
 import {Router} from 'express'
-import { getTasks } from '../controllers/TaskControllers.js'
+import { getTasks, postTask, eraseTask } from '../controllers/TaskControllers.js'
 
 const router = Router()
 
 router.get("/", getTasks)
+router.post('/create', auth, postTask)
+router.delete('/delete/:id', eraseTask)
+
 
 /*vanha versio
 router.get('/', (req,res,next)=>{
@@ -17,7 +20,7 @@ router.get('/', (req,res,next)=>{
     })
 })*/
 
-router.post('/create', auth,(req,res,next)=>{
+/*router.post('/create', auth,(req,res,next)=>{
     const {task} = req.body
     
     if(!task){
@@ -30,9 +33,9 @@ router.post('/create', auth,(req,res,next)=>{
         }
         res.status(201).json({id:result.rows[0].id, description: task.description})
     })
-})
+})*/
 
-router.delete('/delete/:id', (req,res,next)=>{
+/*router.delete('/delete/:id', (req,res,next)=>{
     const {id} = req.params
     console.log(`Deleting task with id: ${id}`)
     pool.query('delete from task WHERE id = $1',
@@ -47,6 +50,6 @@ router.delete('/delete/:id', (req,res,next)=>{
             }
             return res.status(200).json({id:id})
         })
-})
+})*/
 
 export default router
