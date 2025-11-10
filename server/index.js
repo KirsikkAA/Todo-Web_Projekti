@@ -19,7 +19,6 @@ app.listen(port,() => {
 console.log(`Server is running on http://localhost:${port}`)
 })
 
-//???
 app.get('/',(req,res) => {
     pool.query('select * from task', (error, result) => {
         if(error) {
